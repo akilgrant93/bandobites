@@ -8,20 +8,18 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { motion } from "framer-motion"
 
 const Home = ({ alertOnBottom }) => {
-  const [shoes, setShoes] = useState([])
+  const [products, setProducts] = useState([])
   const [windowDimensions, setWindowDimensions] = useState(1);
-  const [ selectedBrand, setSelectedBrand ] = useState(false)
+  const [ selectedCategory, setSelectedCategory ] = useState(false)
   const [ firstEntry, setFirstEntry ] = useState('')
   const [ firstVisibleDoc, setFirstVisibleDoc ] = useState("");
   const [ lastVisibleDoc, setLastVisibleDoc ] = useState("");
   const [loadMore, setLoadMore] = useState(false);//certain actions are performed in useFirestore.jsx in order to make loadMore properly work
   const [scrollTop, setScrollTop] = useState(0);
-  const [ isAdidas, setIsAdidas ] = useState(false)
-  const [ isNike, setIsNike ] = useState(false)
-  const [ isJordan, setIsJordan ] = useState(false)
-  const [ is20, setIs20 ] = useState(true)
-  const [ is40, setIs40 ] = useState(false)
-  const [ is100, setIs100 ] = useState(false)
+  const [ isMush, setIsMush ] = useState(false)
+  const [ isMicrodose, setIsMicrodose ] = useState(false)
+  const [ isEdible, setIsEdible ] = useState(false)
+  const [ isPreroll, setIsPreroll ] = useState(false)
   const [ limit, setLimit ] = useState(20)
   const [ priceMinimum, setPriceMinimum ] = useState('')
   const [ priceMaximum, setPriceMaximum ] = useState('')
@@ -40,48 +38,43 @@ const Home = ({ alertOnBottom }) => {
     }
   };
 
-
+//fixed - but needs db entries to match
   const categoryChange = (e) => {
-    if(e.target.id === 'adidas'){
-      setIsAdidas(!isAdidas)
-      if(selectedBrand !== 'adidas'){setSelectedBrand('adidas')}
-      if(selectedBrand === 'adidas'){setSelectedBrand(false)}
+    if(e.target.id === 'mushroom'){
+      setIsMush(!isMush)
+      if(selectedCategory !== 'mushroom'){setSelectedCategory('mushroom')}
+      if(selectedCategory === 'mushroom'){setSelectedCategory(false)}
 
-      if(isJordan){setIsJordan(!isJordan)}
-      if(isNike){setIsNike(!isNike)}
-    } else if (e.target.id === 'nike'){
-      setIsNike(!isNike)
-      if(selectedBrand !== 'nike'){setSelectedBrand('nike')}
-      if(selectedBrand === 'nike'){setSelectedBrand(false)}
-
-      if(isAdidas){setIsAdidas(!isAdidas)}
-      if(isJordan){setIsJordan(!isJordan)}
-    } else if (e.target.id === 'jordan'){
-      setIsJordan(!isJordan)
-      if(selectedBrand !== 'jordan'){setSelectedBrand('jordan')}
-      if(selectedBrand === 'jordan'){setSelectedBrand(false)}
-
-      if(isNike){setIsNike(!isNike)}
-      if(isAdidas){setIsAdidas(!isAdidas)}
+      if(isMicrodose){setIsMicrodose(!isMicrodose)}
+      if(isEdible){setIsEdible(!isEdible)}
+      if(isPreroll){setIsPreroll(!isPreroll)}
     }
-  };
+    else if (e.target.id === 'microdose'){
+      setIsMicrodose(!isMicrodose)
+      if(selectedCategory !== 'microdose'){setSelectedCategory('microdose')}
+      if(selectedCategory === 'microdose'){setSelectedCategory(false)}
 
-  const itemAmountChange = (e) => {
-    if(e.target.id === '20'){
-      setIs20(!is20)
-      setLimit(20)
-      if(is40){setIs40(!is40)}
-      if(is100){setIs100(!is100)}
-    } else if (e.target.id === '40'){
-      setIs40(!is40)
-      setLimit(40)
-      if(is20){setIs20(!is20)}
-      if(is100){setIs100(!is100)}
-    } else if (e.target.id === '100'){
-      setIs100(!is100)
-      setLimit(100)
-      if(is20){setIs20(!is20)}
-      if(is40){setIs40(!is40)}
+      if(isMush){setIsMush(!isMush)}
+      if(isEdible){setIsEdible(!isEdible)}
+      if(isPreroll){setIsPreroll(!isPreroll)}
+    }
+    else if (e.target.id === 'edible'){
+      setIsEdible(!isEdible)
+      if(selectedCategory !== 'edible'){setSelectedCategory('edible')}
+      if(selectedCategory === 'edible'){setSelectedCategory(false)}
+
+      if(isMush){setIsMush(!isMush)}
+      if(isMicrodose){setIsMicrodose(!isMicrodose)}
+      if(isPreroll){setIsPreroll(!isPreroll)}
+    }
+    else if (e.target.id === 'preroll'){
+      setIsPreroll(!isPreroll)
+      if(selectedCategory !== 'preroll'){setSelectedCategory('preroll')}
+      if(selectedCategory === 'preroll'){setSelectedCategory(false)}
+
+      if(isMush){setIsMush(!isMush)}
+      if(isMicrodose){setIsMicrodose(!isMicrodose)}
+      if(isEdible){setIsEdible(!isEdible)}
     }
   };
 
@@ -94,7 +87,7 @@ const Home = ({ alertOnBottom }) => {
   }
 
   const handleOnDocumentBottom = () => {
-    if(shoes.length % 20 === 0){
+    if(products.length % 20 === 0){
       getNextShoes()
     }
   };
@@ -113,7 +106,7 @@ const Home = ({ alertOnBottom }) => {
 
   useEffect(() => {
 
-    let shoesRef
+    let productsRef
 
     const handleScroll = event => {
       setScrollTop(window.scrollY);
@@ -121,29 +114,29 @@ const Home = ({ alertOnBottom }) => {
 
     window.addEventListener('scroll', handleScroll);
 
-
-    if(selectedBrand !== false && selectedBrand !== 'jordan'){
-      shoesRef = firebase.firestore().collection('shoes').where('category', '==', selectedBrand[0].toUpperCase()+selectedBrand.slice(1)).orderBy('price')
-    } else if(selectedBrand !== false && selectedBrand === 'jordan'){
-      shoesRef = firebase.firestore().collection('shoes').where('category', '==', 'Air Jordan').orderBy('price')
+    //needs to change to reflect actual database of items
+    if(selectedCategory !== false && selectedCategory !== 'jordan'){
+      productsRef = firebase.firestore().collection('shoes').where('category', '==', selectedCategory[0].toUpperCase()+selectedCategory.slice(1)).orderBy('price')
+    } else if(selectedCategory !== false && selectedCategory === 'jordan'){
+      productsRef = firebase.firestore().collection('shoes').where('category', '==', 'Air Jordan').orderBy('price')
     } else {
-      shoesRef = firebase.firestore().collection('shoes').orderBy('price').where('price', '>=', priceMinimum === '' ? 0 : parseInt(priceMinimum))
+      productsRef = firebase.firestore().collection('shoes').orderBy('price').where('price', '>=', priceMinimum === '' ? 0 : parseInt(priceMinimum))
       .where('price', '<=', priceMaximum === '' ? 1000 : parseInt(priceMaximum) )
 
     }
 
-    shoesRef
+    productsRef
     .limit(limit)
     .onSnapshot(
       querySnapshot => {
-        const shoesArr = []
-        querySnapshot.forEach((shoe) => {
-          shoesArr.push({...shoe.data(), id: shoe.id})
+        const productsArr = []
+        querySnapshot.forEach((product) => {
+          productsArr.push({...product.data(), id: product.id})
         })
-        setShoes(shoesArr)
-        setFirstEntry(shoesArr[0])
-        setFirstVisibleDoc(shoesArr[0])
-        setLastVisibleDoc(shoesArr[shoesArr.length-1])
+        setProducts(productsArr)
+        setFirstEntry(productsArr[0])
+        setFirstVisibleDoc(productsArr[0])
+        setLastVisibleDoc(productsArr[productsArr.length-1])
       }
     )
 
@@ -157,14 +150,14 @@ const Home = ({ alertOnBottom }) => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-    }, [selectedBrand, limit, priceMaximum, priceMinimum])
+    }, [selectedCategory, limit, priceMaximum, priceMinimum])
 
     const getNextShoes = () => {
       let shoesRef
-    if(selectedBrand !== false && selectedBrand !== 'jordan'){
-      shoesRef = firebase.firestore().collection('shoes').where('category', '==', selectedBrand[0].toUpperCase()+selectedBrand.slice(1))
+    if(selectedCategory !== false && selectedCategory !== 'jordan'){
+      shoesRef = firebase.firestore().collection('shoes').where('category', '==', selectedCategory[0].toUpperCase()+selectedCategory.slice(1))
       .orderBy('title')
-    } else if(selectedBrand !== false && selectedBrand === 'jordan'){
+    } else if(selectedCategory !== false && selectedCategory === 'jordan'){
       shoesRef = firebase.firestore().collection('shoes').where('category', '==', 'Air Jordan')
       .orderBy('title')
     } else {
@@ -220,7 +213,7 @@ const Home = ({ alertOnBottom }) => {
         </div>
 
         <div style={{boxShadow: '0px -2px 5px rgba(0,0,0,.5)'}} className="flex flex-col lg:flex-row pt-5 pb-20 w-full bg-slate-100">
-        <Sidebar windowDimensions={windowDimensions} priceMaximum={priceMaximum} maximumChange={maximumChange} priceMinimum={priceMinimum} minimumChange={minimumChange} itemAmountChange={itemAmountChange} is20={is20} is40={is40} is100={is100} isNike={isNike} isJordan={isJordan} isAdidas={isAdidas} categoryChange={categoryChange}/>
+        <Sidebar windowDimensions={windowDimensions} priceMaximum={priceMaximum} maximumChange={maximumChange} priceMinimum={priceMinimum} minimumChange={minimumChange} isMush={isMush} isMicrodose={isMicrodose} isEdible={isEdible} isPreroll={isPreroll} categoryChange={categoryChange}/>
         <div>
 <motion.ul
     style={windowDimensions.width < 1024 ? {justifyContent:'center'} : null}
@@ -230,7 +223,7 @@ const Home = ({ alertOnBottom }) => {
     animate="visible"
   >
 
-{shoes.map((shoe, index) => {
+{products.map((shoe, index) => {
             return (<ListItem windowDimensions={windowDimensions} key={index} index={index} shoe={shoe}/>)
           })}
   </motion.ul>
