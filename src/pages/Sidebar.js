@@ -9,7 +9,7 @@ export default function Sidebar(props) {
       <p className='pb-5 font-semibold'>Filter</p>
 
       <ul className='pb-5 rounded-lg bg-white shadow-lg'>
-        <li className='font-semibold border-b border-slate-200 px-5 py-3 mb-2'>BRAND</li>
+        <li className='font-semibold border-b border-slate-200 px-5 py-3 mb-2'>CATEGORY</li>
         <li className='px-5 py-1 text-xs flex content-center'>
           <input
           type="checkbox"

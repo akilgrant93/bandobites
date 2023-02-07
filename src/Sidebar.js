@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import { FaCannabis } from "react-icons/fa";
+import { GiMushroom } from "react-icons/gi";
 
 export default function Sidebar(props) {
   const listStyle01 = {
@@ -22,7 +24,7 @@ export default function Sidebar(props) {
 
       <div style={props.windowDimensions.width < 1024 ? listStyle01 : listStyle02}  className='flex self-center'>
       <ul style={props.windowDimensions.width < 1024 ? listItemStyle01 : null} className='pb-5 rounded-lg bg-white shadow-lg'>
-        <li className='font-semibold border-b border-slate-200 px-5 py-3 mb-2'>BRAND</li>
+        <li className='font-semibold border-b border-slate-200 px-5 py-3 mb-2'>CATEGORY</li>
         <li className='px-5 py-1 text-xs flex content-center'>
           <input
           type="checkbox"
@@ -31,7 +33,7 @@ export default function Sidebar(props) {
           id="jordan"
           name="jordan"
           value="jordan" />
-        <label className='pl-2' htmlFor="jordan">Air Jordan</label></li>
+        <label className='pl-2 flex' htmlFor="jordan"><GiMushroom className='mx-1' size={15}/><p style={{paddingLeft:5}}>Actives</p></label></li>
         <li className='px-5 py-1 text-xs flex content-center'>
           <input
           type="checkbox"
@@ -40,7 +42,7 @@ export default function Sidebar(props) {
           id="nike"
           name="nike"
           value="nike" />
-        <label className='pl-2' htmlFor="nike">Nike</label></li>
+        <label className='pl-2 flex' htmlFor="nike"><GiMushroom className='mx-1' size={15}/><p style={{paddingLeft:5}}>Microdoses</p></label></li>
         <li className='px-5 py-1 text-xs flex content-center'>
           <input
           type="checkbox"
@@ -49,39 +51,16 @@ export default function Sidebar(props) {
           id="adidas"
           name="adidas"
           value="adidas" />
-        <label className='pl-2' htmlFor="adidas">Adidas</label></li>
-      </ul>
-
-      <ul style={props.windowDimensions.width < 1024 ? listItemStyle01 : listItemStyle02} className='pb-5 rounded-lg bg-white shadow-lg lg:mt-5'>
-        <li className='font-semibold border-b border-slate-200 px-5 py-3 mb-2'>ITEMS</li>
+        <label className='pl-2 flex' htmlFor="adidas"><FaCannabis className='mx-1' size={15}/><p style={{paddingLeft:5}}>Edibles</p></label></li>
         <li className='px-5 py-1 text-xs flex content-center'>
           <input
           type="checkbox"
-          checked={props.is20}
-          onChange={props.itemAmountChange}
-          id="20"
-          name="20"
-          value="20" />
-        <label className='pl-2' htmlFor="20">20</label></li>
-        <li className='px-5 py-1 text-xs flex content-center'>
-          <input
-          type="checkbox"
-          checked={props.is40}
-          onChange={props.itemAmountChange}
-          id="40"
-          name="40"
-          value="40" />
-        <label className='pl-2' htmlFor="40">40</label></li>
-        <li className='px-5 py-1 text-xs flex content-center'>
-        <input
-        type="checkbox"
-        checked={props.is100}
-        onChange={props.itemAmountChange}
-        id="100"
-        name="100"
-        value="100" />
-        <label className='pl-2' htmlFor="100">100</label>
-        </li>
+          checked={props.isAdidas}
+          onChange={props.categoryChange}
+          id="adidas"
+          name="adidas"
+          value="adidas" />
+        <label className='pl-2 flex' htmlFor="adidas"><FaCannabis className='mx-1' size={15}/><p style={{paddingLeft:5}}>Prerolls</p></label></li>
       </ul>
 
       <div style={props.windowDimensions.width < 1024 ? null : listItemStyle02} className='lg:mt-5 pb-5 rounded-lg bg-white shadow-lg'>
