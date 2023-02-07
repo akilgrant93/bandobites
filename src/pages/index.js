@@ -205,9 +205,9 @@ const Home = ({ alertOnBottom }) => {
         style={{
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',backgroundImage: "url(/pexels-erik-mclean-7543637.jpg)" }}>
+          backgroundSize: 'cover',backgroundImage: "url(/pexels-kindel-media-7667735.jpg)" }}>
         <div style={windowDimensions.width < 1024 ? synposisStyle01 : synposisStyle02} className='rounded-md shadow-lg p-5 lg:my-16'>
-        <p className='text-center font-bold pb-5 text-xl'> SHOP ALL SNEAKERS</p>
+        <p className='text-center font-bold pb-5 text-xl'>SHOP ALL PRODUCTS</p>
         <p className='text-center text-xs'>The vault goes deep at Shoelala. Shop for new releases from must-have names like Nike, Nike, New Balance and Yeezy, along with the latest collaborations from brands like Vans, Reebok, Converse, ASICS, and more.</p>
         </div>
         </div>
